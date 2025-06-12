@@ -1,0 +1,64 @@
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="assets/ic_logo_login-playstore.png" alt="Logo" />
+      <span>Web Manager</span>
+    </div>
+    <nav>
+      <ul>
+        <li class="active"><i class="material-icons">dashboard</i> Dashboard</li>
+        <li (click)="goToCampaigns()"><i class="material-icons">campaign</i> Campanhas</li>
+        <li (click)="goToReports()"><i class="material-icons">bar_chart</i> Relatórios</li>
+        <li (click)="goToSettings()"><i class="material-icons">settings</i> Configurações</li>
+      </ul>
+    </nav>
+  </aside>
+  <div class="main-content">
+    <header class="main-header">
+      <div class="user-info">
+        <img class="user-photo" [src]="userPhoto" alt="Usuário" />
+        <div>
+          <div class="user-name">{{ userName }}</div>
+          <div class="user-date">{{ currentDate | date:'dd/MM' }}</div>
+        </div>
+      </div>
+      <div class="header-title">
+        <h1>{{ title }}</h1>
+        <p>{{ description }}</p>
+      </div>
+    </header>
+    <section class="dashboard-cards">
+      <div class="card metric-card">
+        <div class="card-title">Campanhas Ativas</div>
+        <div class="card-value">12</div>
+        <div class="card-footer">+2 esta semana</div>
+      </div>
+      <div class="card metric-card">
+        <div class="card-title">Cliques Totais</div>
+        <div class="card-value">4.320</div>
+        <div class="card-footer">+120 hoje</div>
+      </div>
+      <div class="card metric-card">
+        <div class="card-title">Interações</div>
+        <div class="card-value">1.234</div>
+        <div class="card-footer">+34 hoje</div>
+      </div>
+      <div class="card metric-card">
+        <div class="card-title">Tempo Médio</div>
+        <div class="card-value">00:45</div>
+        <div class="card-footer">segundos</div>
+      </div>
+    </section>
+    <section class="dashboard-graphs">
+      <div class="card graph-card">
+        <div class="card-title">Desempenho das Campanhas</div>
+        <!-- inserir um gráfico futuramente -->
+        <div class="graph-placeholder">[Gráfico]</div>
+      </div>
+      <div class="card graph-card">
+        <div class="card-title">Cliques por Dia</div>
+        <div class="graph-placeholder">[Gráfico]</div>
+      </div>
+    </section>
+  </div>
+</div>
