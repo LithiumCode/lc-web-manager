@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common'
-import { Component, OnInit } from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { Firestore, collection, collectionData } from '@angular/fire/firestore'
+import { firstValueFrom } from 'rxjs'
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,7 @@ import { Router } from '@angular/router'
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  protected title = 'Bem-vindo ao Web Manager'
+  protected title = 'Web Skt Manager'
   protected description = ''
 
   userName = ''
@@ -19,24 +21,36 @@ export class HomeComponent implements OnInit {
   userPhoto = ''
   currentDate = new Date()
 
+  skaters: any[] = [];
+  challenges: any[] = [];
+
+  private firestore = inject(Firestore)
+
   constructor (private router: Router) {
     
   }
 
   ngOnInit (): void {
-    console.log('====================================')
-    console.log('Entrando na Home Page')
-    console.log('====================================')
+    this.loadSkaters();
+    this.loadChallengers();
     const state = history.state;
     this.userName = state.nome || 'Usuário';
     this.userEmail = state.email || '';
     this.userPhone = state.telefone || '';
     this.userPhoto = state.foto || 'assets/user-placeholder.png';
-    console.log('Trazendo a foto do usuário:', this.userPhoto);
-    console.log('Trazendo a email do usuário:', this.userEmail);
-    console.log('Trazendo a nome do usuário:', this.userName);
-    console.log('Trazendo a telefone do usuário:', this.userPhone);
-    this.description = `Olá, ${this.userName}. Bem-vindo ao Web Manager!`
+    this.description = `Olá, ${this.userName}. Bem-vindo ao ${this.title}!`
+  }
+
+  async loadSkaters() {
+    const skaterCol = collection(this.firestore, 'Skater');
+    const skaters$ = collectionData(skaterCol, { idField: 'id' });
+    this.skaters = await firstValueFrom(skaters$);
+  }
+  async loadChallengers() {
+    const challengerCol = collection(this.firestore, 'Challenges');
+    const challengers$ = collectionData(challengerCol, { idField: 'id' });
+    this.challenges = await firstValueFrom(challengers$);
+    
   }
 
   goToCampaigns () {

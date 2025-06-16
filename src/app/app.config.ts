@@ -7,7 +7,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/enviroments';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
-const firebaseConfig = environment;
+const firebaseConfig = environment.firebase; 
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +17,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(FormsModule),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
   ]
 };

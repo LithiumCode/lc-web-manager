@@ -2,7 +2,7 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <img src="assets/ic_logo_login-playstore.png" alt="Logo" />
-      <span>Web Manager</span>
+      <span>Web Skt Manager</span>
     </div>
     <nav>
       <ul>
@@ -27,28 +27,22 @@
         <p>{{ description }}</p>
       </div>
     </header>
-    <section class="dashboard-cards">
-      <div class="card metric-card">
-        <div class="card-title">Campanhas Ativas</div>
-        <div class="card-value">12</div>
-        <div class="card-footer">+2 esta semana</div>
-      </div>
-      <div class="card metric-card">
-        <div class="card-title">Cliques Totais</div>
-        <div class="card-value">4.320</div>
-        <div class="card-footer">+120 hoje</div>
-      </div>
-      <div class="card metric-card">
-        <div class="card-title">Interações</div>
-        <div class="card-value">1.234</div>
-        <div class="card-footer">+34 hoje</div>
-      </div>
-      <div class="card metric-card">
-        <div class="card-title">Tempo Médio</div>
-        <div class="card-value">00:45</div>
-        <div class="card-footer">segundos</div>
-      </div>
-    </section>
+    <!-- Cards -->
+<section class="dashboard-cards">
+  <div class="card metric-card total-skaters-card">
+    <div class="card-title">Skaters Cadastrados</div>
+    <div class="card-value">{{ skaters.length }}</div>
+  </div>
+  <div class="card metric-card total-skaters-card">
+    <div class="card-title">Desafios Criados</div>
+    <div class="card-value">{{ challenges.length }}</div>
+  </div>
+  <div class="card metric-card total-skaters-card">
+    <div class="card-title">Skaters Cadastrados</div>
+    <div class="card-value">{{ skaters.length }}</div>
+  </div>
+</section>
+
     <section class="dashboard-graphs">
       <div class="card graph-card">
         <div class="card-title">Desempenho das Campanhas</div>

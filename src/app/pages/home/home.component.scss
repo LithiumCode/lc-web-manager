@@ -129,7 +129,7 @@
 
 .metric-card .card-title {
   font-size: 1.1rem;
-  color: #1976d2;
+  color: #d3e3f3;
   margin-bottom: 8px;
 }
 
@@ -174,4 +174,64 @@
   color: #1976d2;
   font-size: 1.1rem;
   opacity: 0.7;
+}
+
+.total-skaters-card {
+  background: linear-gradient(90deg, #1976d2 0%, #21cbf3 100%);
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #1976d233;
+  padding: 40px 0;
+  min-width: 320px;
+  max-width: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-skaters-card .card-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.total-skaters-card .card-value {
+  font-size: 3.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.total-skaters-card {
+  background: linear-gradient(90deg, #1976d2 0%, #21cbf3 100%);
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #1976d233;
+  padding: 40px 0;
+  min-width: 320px;
+  max-width: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-skaters-card .card-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+}
+
+.total-skaters-card .card-value {
+  font-size: 3.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-top: 10px;
+}
+
+.total-skaters-card .card-footer {
+  font-size: 1rem;
+  margin-top: 8px;
+  color: #e0f7fa;
 }
