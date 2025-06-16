@@ -1,0 +1,42 @@
+.register-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px #1976d233;
+}
+form div {
+  margin-bottom: 16px;
+}
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+.error {
+  color: #e53935;
+  margin-top: 12px;
+  text-align: center;
+}
+.success {
+  color: #388e3c;
+  margin-top: 12px;
+  text-align: center;
+}

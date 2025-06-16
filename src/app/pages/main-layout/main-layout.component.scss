@@ -1,0 +1,145 @@
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f6fa;
+}
+
+.sidebar {
+  width: 220px;
+  background: #232a34;
+  border-right: 1px solid #1a202c;
+  padding: 0;
+  box-shadow: 2px 0 8px 0 rgba(133, 136, 139, 0.281);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 32px 24px 16px 24px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #e2e8f0;
+  letter-spacing: 1px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  display: flex;
+  align-items: center;
+  padding: 14px 24px;
+  color: #cbd5e1;
+  font-size: 1.05rem;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 4px 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+nav ul li.active,
+nav ul li:hover {
+  background: #566072;
+  color: #fff;
+}
+
+nav ul li i.material-icons {
+  margin-right: 12px;
+  font-size: 1.3rem;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f4f6fa;
+  gap: 32px;
+}
+
+.main-header {
+  background: linear-gradient(90deg, #4c5158 0%, #686d75 100%);
+  color: #fff;
+  padding: 32px 40px 24px 40px;
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 110px;
+  box-shadow: 0 4px 16px 0 rgba(92, 98, 104, 0.438);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-photo {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  margin-right: 18px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px 0 rgba(92, 100, 107, 0.1);
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.user-date {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  opacity: 0.85;
+}
+
+.header-title {
+  text-align: right;
+}
+
+.header-title h1 {
+  font-size: 2.1rem;
+  font-weight: bold;
+  margin: 0;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.header-title p {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 1.1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0.5rem 1.2rem rgba(97, 97, 117, 0.07), 0 0.1rem 0.3rem rgba(80, 77, 77, 0.08);
+  padding: 32px 24px;
+  margin: 24px 0;
+  color: #232a34;
+}
+
+@media (max-width: 900px) {
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 16px;
+  }
+  .header-title {
+    text-align: left;
+    margin-top: 12px;
+  }
+  .sidebar {
+    width: 180px;
+    min-width: 120px;
+  }
+}
+
+nav ul li.active {
+  font-weight: bold;
+}

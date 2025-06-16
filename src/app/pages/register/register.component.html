@@ -1,0 +1,38 @@
+<div class="register-container">
+    <h2>Cadastrar Novo Usuário</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label>Nome</label>
+            <input formControlName="name" type="text" required />
+        </div>
+        <div>
+            <label>Email</label>
+            <input formControlName="email" type="email" required />
+        </div>
+        <div>
+            <label>Telefone</label>
+            <input formControlName="phoneNumber" type="text" />
+        </div>
+        <div>
+            <label>Senha</label>
+            <input formControlName="password" type="password" required minlength="6" />
+        </div>
+        <div>
+            <label>Foto (URL)</label>
+            <input formControlName="imageURL" type="text" placeholder="Opcional" />
+        </div>
+        <div>
+            <label>Rule</label>
+            <select formControlName="rule" required>
+                <option value="" disabled selected>Selecione o perfil</option>
+                <option value="ADM">ADM</option>
+                <option value="MKT">MKT</option>
+                <option value="TEC">TEC</option>
+                <option value="SAC">SAC</option>
+            </select>
+        </div>
+        <button type="submit" [disabled]="loading">Cadastrar</button>
+        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+    </form>
+</div>

@@ -1,12 +1,8 @@
 export interface User {
-  skaterId: string;  
+  userId: string;  
   email: string;
   name: string;
   imageURL: string;
   phoneNumber: string;
-  challengeId?: string;
-  challengeCreated?: [];
-  followers?: string[];
-  following?: string[];
-  trophies?: string[];
+  rule?: string;
 }

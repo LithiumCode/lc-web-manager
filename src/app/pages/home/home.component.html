@@ -1,33 +1,3 @@
-<div class="dashboard-layout">
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <img src="assets/ic_logo_login-playstore.png" alt="Logo" />
-      <span>Web Skt Manager</span>
-    </div>
-    <nav>
-      <ul>
-        <li class="active"><i class="material-icons">dashboard</i> Dashboard</li>
-        <li (click)="goToCampaigns()"><i class="material-icons">campaign</i> Campanhas</li>
-        <li (click)="goToReports()"><i class="material-icons">bar_chart</i> Relatórios</li>
-        <li (click)="goToSettings()"><i class="material-icons">settings</i> Configurações</li>
-      </ul>
-    </nav>
-  </aside>
-  <div class="main-content">
-    <header class="main-header">
-      <div class="user-info">
-        <img class="user-photo" [src]="userPhoto" alt="Usuário" />
-        <div>
-          <div class="user-name">{{ userName }}</div>
-          <div class="user-date">{{ currentDate | date:'dd/MM' }}</div>
-        </div>
-      </div>
-      <div class="header-title">
-        <h1>{{ title }}</h1>
-        <p>{{ description }}</p>
-      </div>
-    </header>
-    <!-- Cards -->
 <section class="dashboard-cards">
   <div class="card metric-card total-skaters-card">
     <div class="card-title">Skaters Cadastrados</div>
@@ -37,22 +7,15 @@
     <div class="card-title">Desafios Criados</div>
     <div class="card-value">{{ challenges.length }}</div>
   </div>
-  <div class="card metric-card total-skaters-card">
-    <div class="card-title">Skaters Cadastrados</div>
-    <div class="card-value">{{ skaters.length }}</div>
-  </div>
 </section>
 
-    <section class="dashboard-graphs">
-      <div class="card graph-card">
-        <div class="card-title">Desempenho das Campanhas</div>
-        <!-- inserir um gráfico futuramente -->
-        <div class="graph-placeholder">[Gráfico]</div>
-      </div>
-      <div class="card graph-card">
-        <div class="card-title">Cliques por Dia</div>
-        <div class="graph-placeholder">[Gráfico]</div>
-      </div>
-    </section>
+<section class="dashboard-graphs">
+  <div class="card graph-card">
+    <div class="card-title">Desempenho das Campanhas</div>
+    <div class="graph-placeholder">[Gráfico]</div>
   </div>
-</div>
+  <div class="card graph-card">
+    <div class="card-title">Cliques por Dia</div>
+    <div class="graph-placeholder">[Gráfico]</div>
+  </div>
+</section>

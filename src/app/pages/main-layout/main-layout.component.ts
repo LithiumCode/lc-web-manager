@@ -1,0 +1,109 @@
+import { Component, inject, OnInit } from '@angular/core'
+import { Router, RouterModule } from '@angular/router'
+import { Auth, User as FirebaseUser } from '@angular/fire/auth'
+import { CommonModule } from '@angular/common'
+import { Firestore, doc, getDoc } from '@angular/fire/firestore'
+import { ChangeDetectorRef } from '@angular/core'
+
+@Component({
+  selector: 'app-main-layout',
+  standalone: true,
+  imports: [RouterModule, CommonModule],
+  templateUrl: './main-layout.component.html',
+  styleUrl: './main-layout.component.scss'
+})
+export class MainLayoutComponent implements OnInit {
+  userName = ''
+  userEmail = ''
+  userPhone = ''
+  userPhoto = ''
+  description = ''
+  rule = ''
+  currentDate = new Date()
+
+  public datasets: any;
+  public data: any;
+  public salesChart: any;
+  public clicked: boolean = true;
+  public clicked1: boolean = false;
+
+  private auth = inject(Auth)
+  private firestore = inject(Firestore)
+
+  constructor (private router: Router, private cdr: ChangeDetectorRef) {}
+
+  async ngOnInit () {
+    const state = history.state
+    if (state && (state.nome || state.email)) {
+      this.userName = state.nome || 'Usuário'
+      this.userEmail = state.email || ''
+      this.userPhone = state.telefone || ''
+      this.userPhoto = state.foto || 'assets/user-placeholder.png'
+      this.rule = state.rule || ''
+      this.description = `Olá, ${this.userName}!`
+    } else {
+      this.auth.onAuthStateChanged(async (user: FirebaseUser | null) => {
+        console.log('onAuthStateChanged chamado', user)
+        if (user) {
+          const userDocRef = doc(this.firestore, 'User', user.uid) // ou 'User' se for o caso
+          const userSnap = await getDoc(userDocRef)
+          if (userSnap.exists()) {
+            const userData: any = userSnap.data()
+            console.log('Dados do usuário Firestore:', userData)
+            this.userName = userData.name || 'Usuário'
+            this.userEmail = userData.email || ''
+            this.userPhone = userData.phoneNumber || ''
+            this.userPhoto = userData.imageURL || 'assets/user-placeholder.png'
+            this.rule = userData.rule || ''
+            console.log('Rule via Firestore:', this.rule)
+            this.description = `Olá, ${this.userName}!`
+            this.cdr.detectChanges()
+          } else {
+            this.userName = user.displayName || 'Usuário'
+            this.userEmail = user.email || ''
+            this.userPhone = user.phoneNumber || ''
+            this.userPhoto = user.photoURL || 'assets/user-placeholder.png'
+            this.rule = ''
+            console.log('Rule via Firestore:', this.rule)
+            this.description = `Olá, ${this.userName}!`
+          }
+        } else {
+          this.router.navigate(['/'])
+        }
+      })
+    }
+  }
+
+  get formattedDate (): string {
+    const meses = [
+      'janeiro',
+      'fevereiro',
+      'março',
+      'abril',
+      'maio',
+      'junho',
+      'julho',
+      'agosto',
+      'setembro',
+      'outubro',
+      'novembro',
+      'dezembro'
+    ]
+    const dia = this.currentDate.getDate()
+    const mes = meses[this.currentDate.getMonth()]
+    const ano = this.currentDate.getFullYear()
+    return `${dia} de ${mes} de ${ano}`
+  }
+
+  goToRegister () {
+    this.router.navigate(['/home/register'])
+  }
+  goToCampaigns () {}
+  goToReports () {}
+  goToSettings () {}
+  goOut () {
+    this.auth.signOut().then(() => {
+      this.router.navigate(['/'])
+    })
+  }
+}
