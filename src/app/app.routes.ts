@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { UserRegisterComponent } from './pages/register/register.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { authGuard } from '../auth.guard';
+import { NewCampaignComponent } from './pages/new-campaign/new-campaign.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -13,7 +14,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', component: HomeComponent },
-      { path: 'register', component: UserRegisterComponent }
+      { path: 'register', component: UserRegisterComponent },
+      { path: 'nova-campanha', component: NewCampaignComponent }
     ]
   }
 ];

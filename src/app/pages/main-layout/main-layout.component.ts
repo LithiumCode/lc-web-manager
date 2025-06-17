@@ -3,7 +3,10 @@ import { Router, RouterModule } from '@angular/router'
 import { Auth, User as FirebaseUser } from '@angular/fire/auth'
 import { CommonModule } from '@angular/common'
 import { Firestore, doc, getDoc } from '@angular/fire/firestore'
-import { ChangeDetectorRef } from '@angular/core'
+import { ChangeDetectorRef } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
+registerLocaleData(ptBr);
 
 @Component({
   selector: 'app-main-layout',
@@ -21,12 +24,6 @@ export class MainLayoutComponent implements OnInit {
   rule = ''
   currentDate = new Date()
 
-  public datasets: any;
-  public data: any;
-  public salesChart: any;
-  public clicked: boolean = true;
-  public clicked1: boolean = false;
-
   private auth = inject(Auth)
   private firestore = inject(Firestore)
 
@@ -43,7 +40,7 @@ export class MainLayoutComponent implements OnInit {
       this.description = `Olá, ${this.userName}!`
     } else {
       this.auth.onAuthStateChanged(async (user: FirebaseUser | null) => {
-        console.log('onAuthStateChanged chamado', user)
+        console.log('onAuthStateChanged chamado', user);
         if (user) {
           const userDocRef = doc(this.firestore, 'User', user.uid) // ou 'User' se for o caso
           const userSnap = await getDoc(userDocRef)
@@ -57,7 +54,7 @@ export class MainLayoutComponent implements OnInit {
             this.rule = userData.rule || ''
             console.log('Rule via Firestore:', this.rule)
             this.description = `Olá, ${this.userName}!`
-            this.cdr.detectChanges()
+            this.cdr.detectChanges();
           } else {
             this.userName = user.displayName || 'Usuário'
             this.userEmail = user.email || ''
@@ -74,26 +71,16 @@ export class MainLayoutComponent implements OnInit {
     }
   }
 
-  get formattedDate (): string {
-    const meses = [
-      'janeiro',
-      'fevereiro',
-      'março',
-      'abril',
-      'maio',
-      'junho',
-      'julho',
-      'agosto',
-      'setembro',
-      'outubro',
-      'novembro',
-      'dezembro'
-    ]
-    const dia = this.currentDate.getDate()
-    const mes = meses[this.currentDate.getMonth()]
-    const ano = this.currentDate.getFullYear()
-    return `${dia} de ${mes} de ${ano}`
-  }
+  get formattedDate(): string {
+  const meses = [
+    'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+  ];
+  const dia = this.currentDate.getDate();
+  const mes = meses[this.currentDate.getMonth()];
+  const ano = this.currentDate.getFullYear();
+  return `${dia} de ${mes} de ${ano}`;
+}
 
   goToRegister () {
     this.router.navigate(['/home/register'])

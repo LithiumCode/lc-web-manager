@@ -1,136 +1,35 @@
-.dashboard-layout {
-  display: flex;
-  min-height: 100vh;
-  background: #f4f7fa;
-}
-
-.sidebar {
-  width: 240px;
-  background: #232b3e;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  box-shadow: 2px 0 12px rgba(35, 43, 62, 0.08);
-}
-
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 32px 24px 24px 24px;
-  font-weight: bold;
-  font-size: 1.2rem;
-  border-bottom: 1px solid #2e3950;
-}
-
-.sidebar-header img {
-  width: 40px;
-  height: 40px;
-}
-
-.sidebar nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar nav ul li {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 32px;
-  cursor: pointer;
-  font-size: 1.05rem;
-  transition: background 0.2s;
-}
-
-.sidebar nav ul li.active,
-.sidebar nav ul li:hover {
-  background: #1a2132;
-}
-
-.sidebar nav ul li i.material-icons {
-  font-size: 22px;
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 40px 40px 40px;
-}
-
-.main-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, #1976d2 0%, #21cbf3 100%);
-  color: #fff;
-  border-radius: 0 0 18px 18px;
-  padding: 32px 32px 24px 32px;
-  margin-bottom: 32px;
-  box-shadow: 0 4px 24px rgba(25, 118, 210, 0.08);
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.user-photo {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  object-fit: cover;
-  background: #e3f2fd;
-}
-
-.user-name {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.user-date {
-  font-size: 1rem;
-  opacity: 0.85;
-}
-
-.header-title h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 600;
-}
-
-.header-title p {
-  margin: 4px 0 0 0;
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
 .dashboard-cards {
   display: flex;
-  gap: 24px;
-  margin: 32px 0 0 0;
+  gap: 18px;
+  margin: 24px 0 0 0;
+  flex-wrap: wrap;
 }
 
-.card {
+.metric-card {
   background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(120, 136, 151, 0.07);
-  padding: 28px 24px;
-  flex: 1;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+  padding: 24px 18px;
+  flex: 1 1 180px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 180px;
+  max-width: 100%;
+  color: #232b3e;
+  margin: 0 0 16px 0;
 }
+
+.metric-card.blue { background: #2196f3 !important; color: #fff !important; }
+.metric-card.green { background: #43a047 !important; color: #fff !important; }
+.metric-card.yellow { background: #ffb300 !important; color: #fff !important; }
+.metric-card.red { background: #e53935 !important; color: #fff !important; }
 
 .metric-card .card-title {
   font-size: 1.1rem;
-  color: #d3e3f3;
+  font-weight: 500;
   margin-bottom: 8px;
+  letter-spacing: 1px;
 }
 
 .metric-card .card-value {
@@ -141,20 +40,26 @@
 
 .metric-card .card-footer {
   font-size: 0.95rem;
-  color: #888;
+  color: #e3e3e3;
+}
+
+.table-card, .graph-card, .card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+  padding: 18px 18px;
+  margin-top: 24px;
+  color: #232b3e;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
 }
 
 .dashboard-graphs {
   display: flex;
   gap: 24px;
   margin-top: 32px;
-}
-
-.graph-card {
-  flex: 1;
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .graph-placeholder {
@@ -176,62 +81,73 @@
   opacity: 0.7;
 }
 
-.total-skaters-card {
-  background: linear-gradient(90deg, #868e96 0%, #788588 100%);
-  color: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 16px #79808633;
-  padding: 40px 0;
-  min-width: 320px;
-  max-width: 350px;
-  margin: 0 auto;
+.dashboard-cards .metric-card:nth-child(1) { background: #2196f3 !important; color: #fff !important; }
+.dashboard-cards .metric-card:nth-child(2) { background: #43a047 !important; color: #fff !important; }
+.dashboard-cards .metric-card:nth-child(3) { background: #ffb300 !important; color: #fff !important; }
+.dashboard-cards .metric-card:nth-child(4) { background: #e53935 !important; color: #fff !important; }
+
+@media (max-width: 900px) {
+  .dashboard-cards {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .metric-card {
+    min-width: 0;
+    width: 100%;
+    margin: 0 0 12px 0;
+  }
+  .dashboard-graphs {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .table-card, .graph-card {
+    padding: 12px 6px;
+  }
+}
+
+.new-campaign-card, .new-campaign-card-form {
+  background: #fff;
+  border: 2px dashed #2196f3;
+  color: #2196f3;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
 }
-
-.total-skaters-card .card-title {
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 12px;
-  letter-spacing: 1px;
+.new-campaign-card:hover {
+  box-shadow: 0 2px 12px rgba(33,150,243,0.15);
+  background: #e3f2fd;
 }
-
-.total-skaters-card .card-value {
-  font-size: 3.5rem;
+.new-campaign-plus {
+  font-size: 2.5rem;
   font-weight: bold;
-  letter-spacing: 2px;
+  margin-bottom: 8px;
 }
-.total-skaters-card {
-  background: linear-gradient(90deg, #788088 0%, #788088 100%);
+.new-campaign-card-form {
+  color: #232b3e;
+  border-style: solid;
+  cursor: default;
+}
+.new-campaign-card-form input[type="text"],
+.new-campaign-card-form input[type="number"] {
+  width: 100%;
+  margin: 8px 0 16px 0;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #bdbdbd;
+}
+.new-campaign-card-form button {
+  margin: 8px 8px 0 0;
+  padding: 6px 16px;
+  border-radius: 4px;
+  border: none;
+  background: #2196f3;
   color: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 16px #1976d233;
-  padding: 40px 0;
-  min-width: 320px;
-  max-width: 350px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  cursor: pointer;
 }
-
-.total-skaters-card .card-title {
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 18px;
-  letter-spacing: 1px;
-}
-
-.total-skaters-card .card-value {
-  font-size: 3.5rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  margin-top: 10px;
-}
-
-.total-skaters-card .card-footer {
-  font-size: 1rem;
-  margin-top: 8px;
-  color: #e0f7fa;
+.new-campaign-card-form button[type="button"] {
+  background: #e53935;
 }

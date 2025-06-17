@@ -9,7 +9,7 @@
                 <li routerLink="/home" routerLinkActive="active">
                     <i class="material-icons">dashboard</i> Dashboard
                 </li>
-                <li *ngIf="rule == 'ADM'" (click)="goToRegister()">
+                <li *ngIf="rule === 'ADM'" (click)="goToRegister()">
                     <i class="material-icons">person_add</i> Novo Usuário
                 </li>
                 <li (click)="goToCampaigns()">
@@ -33,7 +33,7 @@
                 <img class="user-photo" [src]="userPhoto" alt="Usuário" />
                 <div>
                     <div class="user-name">{{ userName }}</div>
-                    <div class="user-date">{{ currentDate | date:'dd/MM' }}</div>
+                    <div class="user-date">{{ formattedDate}}</div>
                 </div>
             </div>
             <div class="header-title">

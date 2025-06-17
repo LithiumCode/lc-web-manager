@@ -23,6 +23,7 @@ export class UserRegisterComponent {
   errorMessage = ''
   successMessage = ''
   loading = false
+  isSaving = false;
 
   constructor (
     private fb: FormBuilder,
@@ -41,6 +42,7 @@ export class UserRegisterComponent {
   }
 
   async onSubmit () {
+    this.isSaving = true;
     this.errorMessage = ''
     this.successMessage = ''
     if (this.registerForm.invalid) return
@@ -72,6 +74,7 @@ export class UserRegisterComponent {
 
       this.successMessage = 'Usuário cadastrado com sucesso!'
       this.registerForm.reset()
+      this.isSaving = false;
     } catch (error: any) {
       this.errorMessage = error.message
     }

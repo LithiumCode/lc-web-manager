@@ -1,0 +1,174 @@
+.form-campaign-container {
+  width: 70vw;
+  max-width: 900px;
+  min-width: 280px;
+  margin: 48px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
+  padding: 32px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.form-campaign-container label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #232b3e;
+}
+
+.form-campaign-container input[type="text"],
+.form-campaign-container input[type="number"],
+.form-campaign-container input[type="file"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 18px;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f7fafc;
+  transition: border 0.2s;
+}
+
+.form-campaign-container input:focus {
+  border: 1.5px solid #2196f3;
+  outline: none;
+  background: #e3f2fd;
+}
+
+// --- Botões corporativos ---
+.form-campaign-container button {
+  padding: 10px 0;
+  border-radius: 6px;
+  border: none;
+  background: #22336b; // azul corporativo escuro
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(34, 51, 107, 0.08);
+}
+
+.form-campaign-container button[type="button"] {
+  background: #7b8794; // cinza corporativo
+  color: #fff;
+}
+
+.form-campaign-container button:disabled {
+  background: #b0b8c1;
+  color: #f4f6fa;
+  cursor: not-allowed;
+}
+
+.form-campaign-container button:hover:not(:disabled) {
+  background: #1a2547;
+  box-shadow: 0 4px 16px rgba(34, 51, 107, 0.15);
+}
+
+.form-campaign-container button[type="button"]:hover:not(:disabled) {
+  background: #5a6270;
+}
+
+.form-campaign-container .summary {
+  background: #f4f6fa;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 900px) {
+  .form-campaign-container {
+    width: 98vw;
+    padding: 18px 6px;
+    max-width: 98vw;
+  }
+}
+
+.form-campaign-container .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.form-campaign-container button {
+  min-width: 180px;
+  padding: 12px 0;
+  border-radius: 6px;
+  border: none;
+  background: #22336b; // azul corporativo escuro
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.08rem;
+  margin: 0;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(34, 51, 107, 0.08);
+  display: inline-block;
+}
+
+.form-campaign-container button[type="button"] {
+  background: #7b8794; // cinza corporativo
+  color: #fff;
+}
+
+.form-campaign-container button:disabled {
+  background: #b0b8c1;
+  color: #f4f6fa;
+  cursor: not-allowed;
+}
+
+.form-campaign-container button:hover:not(:disabled) {
+  background: #1a2547;
+  box-shadow: 0 4px 16px rgba(34, 51, 107, 0.15);
+}
+
+.form-campaign-container button[type="button"]:hover:not(:disabled) {
+  background: #5a6270;
+}
+.loading-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(34, 51, 107, 0.18);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-overlay .spinner {
+  border: 6px solid #e3e8f0;
+  border-top: 6px solid #22336b;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 18px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(34, 51, 107, 0.18);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Garante centralização absoluta na viewport */
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}

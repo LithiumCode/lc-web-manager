@@ -1,3 +1,7 @@
+<div class="loading-overlay" *ngIf="loading">
+    <div class="spinner"></div>
+    <span>Salvando usuário...</span>
+</div>
 <div class="register-container">
     <h2>Cadastrar Novo Usuário</h2>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">

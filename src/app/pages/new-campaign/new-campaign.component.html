@@ -1,0 +1,53 @@
+<div class="loading-overlay" *ngIf="isSaving">
+  <div class="spinner"></div>
+  <span>Salvando campanha...</span>
+</div>
+<form class="form-campaign-container" (ngSubmit)="submitCampaign()" autocomplete="off">
+    <h2 style="text-align: center; margin-bottom: 12px;">Criar Nova Campanha</h2>
+    <p class="instructions" style="text-align: center;">
+        Preencha os campos abaixo. O próximo campo aparecerá após pressionar <b>Enter</b>.<br>
+        Você pode revisar e salvar ao final.
+    </p>
+
+    <!-- Nome da campanha -->
+    <div>
+        <label>Nome da campanha</label>
+        <input type="text" [(ngModel)]="newCampaign.name" name="name" (keydown)="nextStep($event)" [disabled]="step > 1"
+            required autofocus />
+    </div>
+
+    <!-- Anunciante -->
+    <div *ngIf="step > 1">
+        <label>Anunciante</label>
+        <input type="text" [(ngModel)]="newCampaign.advertiser" name="advertiser" (keydown)="nextStep($event)"
+            [disabled]="step > 2" required autofocus />
+    </div>
+
+    <!-- Dias no ar -->
+    <div *ngIf="step > 2">
+        <label>Dias no ar</label>
+        <input type="number" [(ngModel)]="newCampaign.days" name="days" (keydown)="nextStep($event)" min="1"
+            [disabled]="step > 3" required autofocus />
+    </div>
+
+    <!-- Upload do vídeo -->
+    <div *ngIf="step > 3">
+        <label>Vídeo do anúncio</label>
+        <input type="file" (change)="onVideoSelected($event)" accept="video/*" [disabled]="step > 4" required />
+        <span *ngIf="newCampaign.video">{{ newCampaign.video?.name }}</span>
+    </div>
+
+    <!-- Resumo e botão de salvar -->
+    <div *ngIf="step === 5">
+        <div class="summary">
+            <p><b>Nome:</b> {{newCampaign.name}}</p>
+            <p><b>Anunciante:</b> {{newCampaign.advertiser}}</p>
+            <p><b>Dias:</b> {{newCampaign.days}}</p>
+            <p><b>Vídeo:</b> {{newCampaign.video?.name}}</p>
+        </div>
+        <div class="button-group">
+            <button type="submit" [disabled]="isSaving">Subir Campanha</button>
+            <button type="button" (click)="cancelNewCampaign()" [disabled]="isSaving">Cancelar</button>
+        </div>
+    </div>
+</form>

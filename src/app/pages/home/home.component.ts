@@ -4,11 +4,13 @@ import { Router, RouterModule } from '@angular/router'
 import { Firestore, collection, collectionData } from '@angular/fire/firestore'
 import { firstValueFrom } from 'rxjs'
 import { Auth } from '@angular/fire/auth'
+import { doc, getDoc } from '@angular/fire/firestore'
+import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -27,21 +29,30 @@ export class HomeComponent implements OnInit {
   challenges: any[] = []
 
   private firestore = inject(Firestore)
-   private auth = inject(Auth)
+  private auth = inject(Auth)
 
   constructor (private router: Router) {}
 
-  ngOnInit (): void {
+  async ngOnInit (): Promise<void> {
+    this.loadUserRule()
     this.loadSkaters()
     this.loadChallengers()
     const state = history.state
-    this.userName = state.nome || 'Usuário'
-    this.userEmail = state.email || ''
-    this.userPhone = state.telefone || ''
-    this.userPhoto = state.foto || 'assets/user-placeholder.png'
-    this.description = `Olá, ${this.userName}!`
   }
 
+  async loadUserRule () {
+    const user = this.auth.currentUser
+    if (user) {
+      const userDocRef = doc(this.firestore, 'User', user.uid)
+
+      const userSnap = await getDoc(userDocRef)
+      if (userSnap.exists()) {
+        const userData = userSnap.data() as any
+        this.rule = userData.rule || ''
+        this.userName = userData.nome || 'Usuário'
+      }
+    }
+  }
   async loadSkaters () {
     const skaterCol = collection(this.firestore, 'Skater')
     const skaters$ = collectionData(skaterCol, { idField: 'id' })
@@ -53,14 +64,37 @@ export class HomeComponent implements OnInit {
     this.challenges = await firstValueFrom(challengers$)
   }
 
+  showNewCampaign = false
+  newCampaign: any = {}
+
+  onStepChange () {
+    // Força atualização do Angular para mostrar próximo campo
+  }
+
+  onVideoSelected (event: any) {
+    const file = event.target.files[0]
+    if (file) {
+      this.newCampaign.video = file
+    }
+  }
+
+  cancelNewCampaign () {
+    this.showNewCampaign = false
+    this.newCampaign = {}
+  }
+
+  submitCampaign () {
+    // Aqui você pode salvar a campanha (mock ou API)
+    alert('Campanha criada!')
+    this.cancelNewCampaign()
+  }
+
   goToRegister () {
     this.router.navigate(['/register'])
   }
 
-  goToCampaigns () {
-    console.log('====================================')
-    console.log('Navegando para campanhas')
-    console.log('====================================')
+  goToNewCampaign () {
+    this.router.navigate(['/home/nova-campanha']);
   }
 
   goToReports () {
@@ -75,14 +109,17 @@ export class HomeComponent implements OnInit {
     console.log('====================================')
   }
 
-  goOut() {
-    this.auth.signOut().then(() => {
-      console.log('====================================')
-      console.log('Usuário deslogado com sucesso')
-      console.log('====================================')
-      this.router.navigate(['/login'])
-    }).catch(error => {
-      console.error('Erro ao deslogar:', error)
-    })
+  goOut () {
+    this.auth
+      .signOut()
+      .then(() => {
+        console.log('====================================')
+        console.log('Usuário deslogado com sucesso')
+        console.log('====================================')
+        this.router.navigate(['/login'])
+      })
+      .catch(error => {
+        console.error('Erro ao deslogar:', error)
+      })
   }
 }
