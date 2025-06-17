@@ -1,21 +1,11 @@
-import { Component, inject } from '@angular/core'
-import { Router } from '@angular/router'
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms'
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth'
-import { Firestore, doc, setDoc } from '@angular/fire/firestore'
-import { User } from '../../models/user'
-import { CommonModule } from '@angular/common'
-import {
-  Storage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from '@angular/fire/storage'
+import { Component, inject } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { environment } from '../../../environments/enviroments';
+import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
 @Component({
   selector: 'app-user-register',
@@ -25,89 +15,92 @@ import {
   styleUrl: './register.component.scss'
 })
 export class UserRegisterComponent {
-  registerForm: FormGroup
-  errorMessage = ''
-  successMessage = ''
-  loading = false
-  isSaving = false
-
-  selectedPhotoName: string | null = null
-  selectedPhotoFile: File | null = null
+  
+  selectedPhotoFile: File | null = null;
+  selectedPhotoName: string | null = null;
+  isSaving = false;
+  loading = false;
+  errorMessage = '';
+  successMessage = '';
 
   private storage = inject(Storage);
+  private firestore = inject(Firestore);
+  private fb = inject(FormBuilder);
 
-  constructor (
-    private fb: FormBuilder,
-    private auth: Auth,
-    private firestore: Firestore,
-    private router: Router
-  ) {
-    this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: [''],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      rule: ['', [Validators.required, Validators.minLength(3)]],
-      imageURL: ['']
-    })
-  }
+  registerForm = this.fb.group({
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    phoneNumber: [''],
+    rule: ['', Validators.required]
+  });
 
-  onPhotoSelected (event: any) {
-    const file = event.target.files[0]
+  onPhotoSelected(event: any) {
+    const file = event.target.files[0];
     if (file) {
-      this.selectedPhotoFile = file
-      this.selectedPhotoName = file.name
+      this.selectedPhotoFile = file;
+      this.selectedPhotoName = file.name;
     }
   }
 
-  async onSubmit () {
-    this.isSaving = true
-    this.errorMessage = ''
-    this.successMessage = ''
-    if (this.registerForm.invalid) return
+  async onSubmit() {
+    this.isSaving = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+    if (this.registerForm.invalid) {
+      this.isSaving = false;
+      return;
+    }
 
-    const { name, email, phoneNumber, password, rule } = this.registerForm.value
-    this.loading = true
+    const { name, email, phoneNumber, password, rule } = this.registerForm.value;
+    this.loading = true;
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      )
-      const userId = userCredential.user.uid
+      // Inicializa um app secundário para não deslogar o usuário atual
+      const secondaryApp = initializeApp(environment.firebase, 'Secondary');
+      const secondaryAuth = getAuth(secondaryApp);
 
-      let photoURL = ''
+      // Cria o usuário no Auth secundário
+      const userCredential = await createUserWithEmailAndPassword(
+        secondaryAuth,
+        email!,
+        password!
+      );
+      const userId = userCredential.user.uid;
+
+      let photoURL = '';
       if (this.selectedPhotoFile) {
         const storageRef = ref(
           this.storage,
           `user-photos/${userId}_${this.selectedPhotoFile.name}`
-        )
-        await uploadBytes(storageRef, this.selectedPhotoFile)
-        photoURL = await getDownloadURL(storageRef)
+        );
+        await uploadBytes(storageRef, this.selectedPhotoFile);
+        photoURL = await getDownloadURL(storageRef);
       }
 
-      const user: User = {
+      // Salva os dados no Firestore
+      const user = {
         userId,
         email,
         name,
-        imageURL:
-          photoURL ||
-          'https://ui-avatars.com/api/?name=' + encodeURIComponent(name),
+        imageURL: photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name!),
         phoneNumber,
         rule
-      }
+      };
+      const userDoc = doc(this.firestore, 'User', userId);
+      await setDoc(userDoc, user);
 
-      const userDoc = doc(this.firestore, 'User', userId)
-      await setDoc(userDoc, user)
+      // Desloga o usuário secundário para liberar recursos
+      await signOut(secondaryAuth);
 
-      this.successMessage = 'Usuário cadastrado com sucesso!'
-      this.registerForm.reset()
-      this.selectedPhotoFile = null
-      this.selectedPhotoName = null
-      this.isSaving = false
+      this.successMessage = 'Usuário cadastrado com sucesso!';
+      this.registerForm.reset();
+      this.selectedPhotoFile = null;
+      this.selectedPhotoName = null;
     } catch (error: any) {
-      this.errorMessage = error.message
+      this.errorMessage = error.message;
+    } finally {
+      this.isSaving = false;
+      this.loading = false;
     }
-    this.loading = false
   }
 }
