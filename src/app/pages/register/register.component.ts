@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import {
   FormBuilder,
@@ -10,6 +10,12 @@ import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth'
 import { Firestore, doc, setDoc } from '@angular/fire/firestore'
 import { User } from '../../models/user'
 import { CommonModule } from '@angular/common'
+import {
+  Storage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from '@angular/fire/storage'
 
 @Component({
   selector: 'app-user-register',
@@ -23,7 +29,12 @@ export class UserRegisterComponent {
   errorMessage = ''
   successMessage = ''
   loading = false
-  isSaving = false;
+  isSaving = false
+
+  selectedPhotoName: string | null = null
+  selectedPhotoFile: File | null = null
+
+  private storage = inject(Storage);
 
   constructor (
     private fb: FormBuilder,
@@ -41,14 +52,21 @@ export class UserRegisterComponent {
     })
   }
 
+  onPhotoSelected (event: any) {
+    const file = event.target.files[0]
+    if (file) {
+      this.selectedPhotoFile = file
+      this.selectedPhotoName = file.name
+    }
+  }
+
   async onSubmit () {
-    this.isSaving = true;
+    this.isSaving = true
     this.errorMessage = ''
     this.successMessage = ''
     if (this.registerForm.invalid) return
 
-    const { name, email, phoneNumber, password, imageURL, rule } =
-      this.registerForm.value
+    const { name, email, phoneNumber, password, rule } = this.registerForm.value
     this.loading = true
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -58,12 +76,22 @@ export class UserRegisterComponent {
       )
       const userId = userCredential.user.uid
 
+      let photoURL = ''
+      if (this.selectedPhotoFile) {
+        const storageRef = ref(
+          this.storage,
+          `user-photos/${userId}_${this.selectedPhotoFile.name}`
+        )
+        await uploadBytes(storageRef, this.selectedPhotoFile)
+        photoURL = await getDownloadURL(storageRef)
+      }
+
       const user: User = {
         userId,
         email,
         name,
         imageURL:
-          imageURL ||
+          photoURL ||
           'https://ui-avatars.com/api/?name=' + encodeURIComponent(name),
         phoneNumber,
         rule
@@ -74,7 +102,9 @@ export class UserRegisterComponent {
 
       this.successMessage = 'Usuário cadastrado com sucesso!'
       this.registerForm.reset()
-      this.isSaving = false;
+      this.selectedPhotoFile = null
+      this.selectedPhotoName = null
+      this.isSaving = false
     } catch (error: any) {
       this.errorMessage = error.message
     }

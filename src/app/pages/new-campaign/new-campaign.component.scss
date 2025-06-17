@@ -6,7 +6,7 @@
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
-  padding: 32px 28px 24px 28px;
+  padding: 32px 32px 28px 28px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -22,7 +22,7 @@
 .form-campaign-container input[type="number"],
 .form-campaign-container input[type="file"] {
   width: 100%;
-  padding: 8px 10px;
+  padding: 8px 2px;
   margin-bottom: 18px;
   border: 1px solid #bdbdbd;
   border-radius: 6px;
@@ -37,12 +37,12 @@
   background: #e3f2fd;
 }
 
-// --- Botões corporativos ---
+// --- Botões ---
 .form-campaign-container button {
   padding: 10px 0;
   border-radius: 6px;
   border: none;
-  background: #22336b; // azul corporativo escuro
+  background: #22336b;
   color: #fff;
   font-weight: 600;
   font-size: 1rem;
@@ -54,7 +54,7 @@
 }
 
 .form-campaign-container button[type="button"] {
-  background: #7b8794; // cinza corporativo
+  background: #7b8794;
   color: #fff;
 }
 
@@ -101,7 +101,7 @@
   padding: 12px 0;
   border-radius: 6px;
   border: none;
-  background: #22336b; // azul corporativo escuro
+  background: #22336b;
   color: #fff;
   font-weight: 600;
   font-size: 1.08rem;
@@ -113,7 +113,7 @@
 }
 
 .form-campaign-container button[type="button"] {
-  background: #7b8794; // cinza corporativo
+  background: #7b8794;
   color: #fff;
 }
 
@@ -166,7 +166,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Garante centralização absoluta na viewport */
   width: 100vw;
   height: 100vh;
   left: 0;
