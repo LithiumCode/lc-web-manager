@@ -148,10 +148,6 @@ span {
   text-align: center;
 }
 
-.success-card h3 {
-  color: #1976d2;
-}
-
 .error-card h3 {
   color: #d32f2f;
 }
@@ -190,4 +186,77 @@ span {
 @keyframes spin {
   0% { transform: rotate(0deg);}
   100% { transform: rotate(360deg);}
+}
+.card-info.success-card {
+  max-width: 520px;
+  margin: 40px auto;
+  background: linear-gradient(120deg, #f7fafc 60%, #e3eafc 100%);
+  border-radius: 14px;
+  box-shadow: 0 4px 24px #22336b22;
+  padding: 36px 32px 28px 32px;
+  text-align: left;
+  border-left: 8px solid #1976d2;
+  position: relative;
+  animation: fadeIn 0.7s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.success-card h3 {
+  color: #1976d2;
+  font-size: 1.6em;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.success-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.success-card li {
+  font-size: 1.08em;
+  margin-bottom: 10px;
+  color: #22336b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.success-card b {
+  min-width: 120px;
+  color: #1976d2;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.success-card a {
+  color: #1976d2;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.success-card a:hover {
+  color: #1251a3;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .card-info.success-card {
+    padding: 22px 8px 18px 12px;
+    max-width: 98vw;
+  }
+  .success-card h3 {
+    font-size: 1.2em;
+  }
+  .success-card li {
+    font-size: 1em;
+  }
 }

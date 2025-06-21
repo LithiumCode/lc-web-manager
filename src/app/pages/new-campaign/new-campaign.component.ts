@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common'
 import {
   collectionData,
   doc,
+  docData,
   Firestore,
   getDoc,
   getDocs,
@@ -55,13 +56,11 @@ export class NewCampaignComponent implements OnInit {
     const advertisingCol = collection(this.firestore, 'Advertising')
     const snapshot = await getDocs(advertisingCol)
     this.advertiser = snapshot.docs.map(doc => doc.data())
-    this.auth.onAuthStateChanged(user => {
+    this.auth.onAuthStateChanged(async user => {
       if (user) {
-        this.user = {
-          userId: user.uid,
-          name: user.displayName,
-          email: user.email
-        }
+        const userDoc = doc(this.firestore, 'User', user.uid)
+        this.user = await firstValueFrom(docData(userDoc))
+        this.user.userId = user.uid
       }
     })
   }
@@ -122,27 +121,17 @@ export class NewCampaignComponent implements OnInit {
   }
 
   async submitCampaign () {
-    console.log({
-      cliente: this.cliente,
-      selectedAd: this.selectedAd,
-      newCampaign: this.newCampaign,
-      user: this.user
-    })
-
     if (
       !this.cliente ||
-      !this.cliente.companyName ||
-      !this.cliente.address ||
+      !this.cliente.razaoSocial ||
+      !this.cliente.endereco ||
       !this.selectedAd ||
       !this.selectedAd.type ||
       !this.selectedAd.price ||
       !this.selectedAd.period ||
       !this.newCampaign.name ||
       !this.newCampaign.days ||
-      !this.newCampaign.media ||
-      !this.user ||
-      !this.user.userId ||
-      !this.user.name
+      !this.newCampaign.media
     ) {
       this.errorMsg = 'Preencha todos os campos obrigatórios!'
       return
@@ -170,37 +159,30 @@ export class NewCampaignComponent implements OnInit {
         days: Number(this.newCampaign.days),
         mediaUrl,
         mediaType: this.selectedAd.type,
-        advertiser: this.selectedAd.type,
         client: {
           id: this.cliente.id || null,
-          companyName: this.cliente.companyName,
-          tradeName: this.cliente.tradeName,
+          razaoSocial: this.cliente.razaoSocial,
+          nomeFantasia: this.cliente.nomeFantasia,
           cnpj: this.cliente.cnpj,
-          stateRegistration: this.cliente.stateRegistration || '',
-          municipalRegistration: this.cliente.municipalRegistration || '',
-          address: this.cliente.address,
-          contact: this.cliente.contact,
-          representative: this.cliente.representative
+          inscricaoEstadual: this.cliente.inscricaoEstadual || '',
+          endereco: this.cliente.endereco,
+          telefone: this.cliente.telefone,
+          responsavel: this.cliente.responsavel,
+          email: this.cliente.email
         },
         createdById: this.user.userId,
         createdByName: this.user.displayName || this.user.name,
         createdAt: new Date(),
         status: CampaignStatus.INACTIVE
       }
-      console.log('====================================')
-      console.log('Dados da campanha:', campaignData)
-      console.log('====================================')
-
       // Salva no Firestore
       await addDoc(collection(this.firestore, 'Campaign'), campaignData)
 
       // Sucesso
-      alert('Campanha criada com sucesso!')
       this.successCampaign = campaignData
       this.newCampaign = {}
       this.selectedAd = null
       this.isSaving = false
-      this.router.navigate(['/home'])
     } catch (error: any) {
       alert('Erro ao salvar campanha: ' + error.message)
       this.isSaving = false
