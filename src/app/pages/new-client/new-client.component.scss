@@ -1,4 +1,4 @@
-.form-campaign-container {
+.form-client-container {
   max-width: 480px;
   margin: 32px auto;
   background: #fff;
@@ -10,7 +10,7 @@
   gap: 18px;
 }
 
-.form-campaign-container h2 {
+.form-client-container h2 {
   text-align: center;
   margin-bottom: 18px;
   color: #22336b;
@@ -23,15 +23,14 @@
   margin-bottom: 8px;
 }
 
-.form-campaign-container label {
+.form-client-container label {
   font-weight: 500;
   color: #22336b;
 }
 
-.form-campaign-container input[type="text"],
-.form-campaign-container input[type="number"],
-.form-campaign-container input[type="file"],
-.form-campaign-container select {
+.form-client-container input[type="text"],
+.form-client-container input[type="number"],
+.form-client-container input[type="email"] {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #bdbdbd;
@@ -43,61 +42,9 @@
   transition: border 0.2s;
 }
 
-.form-campaign-container select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: #f7fafc url("data:image/svg+xml;utf8,<svg fill='gray' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center/18px 18px;
-  padding-right: 36px;
-}
-
-.form-campaign-container input[readonly] {
+.form-client-container input[readonly] {
   background: #e9ecef;
   color: #888;
-}
-
-.cnpj-row-centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.btn-buscar {
-  background: #1976d2;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 24px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.2s;
-  min-width: 120px;
-  font-weight: 500;
-}
-
-.btn-buscar:hover {
-  background: #1251a3;
-}
-
-.button-group {
-  display: flex;
-  gap: 12px;
-  margin-top: 18px;
-  justify-content: center;
-}
-
-span {
-  font-size: 0.95em;
-  color: #22336b;
-  margin-top: 2px;
-}
-.error-msg {
-  color: #d32f2f;
-  font-size: 0.97em;
-  margin-top: 4px;
-  text-align: center;
 }
 
 .button-group {
@@ -138,31 +85,20 @@ span {
 .btn-cancel:hover {
   background: #bdbdbd;
 }
-.card-info {
-  max-width: 480px;
-  margin: 32px auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 16px #22336b22;
-  padding: 32px 24px;
+
+.error-msg {
+  color: #d32f2f;
+  font-size: 0.97em;
+  margin-top: 4px;
   text-align: center;
 }
 
-.success-card h3 {
+.success-msg {
   color: #1976d2;
+  font-size: 1em;
+  margin-top: 8px;
+  text-align: center;
 }
-
-.error-card h3 {
-  color: #d32f2f;
-}
-
-.loading-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
 .loader {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #1976d2;
@@ -172,7 +108,6 @@ span {
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
-
 @keyframes spin {
   0% { transform: rotate(0deg);}
   100% { transform: rotate(360deg);}

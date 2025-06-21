@@ -3,10 +3,10 @@ import { Router, RouterModule } from '@angular/router'
 import { Auth, User as FirebaseUser } from '@angular/fire/auth'
 import { CommonModule } from '@angular/common'
 import { Firestore, doc, getDoc } from '@angular/fire/firestore'
-import { ChangeDetectorRef } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import ptBr from '@angular/common/locales/pt';
-registerLocaleData(ptBr);
+import { ChangeDetectorRef } from '@angular/core'
+import { registerLocaleData } from '@angular/common'
+import ptBr from '@angular/common/locales/pt'
+registerLocaleData(ptBr)
 
 @Component({
   selector: 'app-main-layout',
@@ -42,7 +42,7 @@ export class MainLayoutComponent implements OnInit {
       this.auth.onAuthStateChanged(async (user: FirebaseUser | null) => {
         console.log('onAuthStateChanged chamado', user);
         if (user) {
-          const userDocRef = doc(this.firestore, 'User', user.uid) // ou 'User' se for o caso
+          const userDocRef = doc(this.firestore, 'User', user.uid)
           const userSnap = await getDoc(userDocRef)
           if (userSnap.exists()) {
             const userData: any = userSnap.data()
@@ -71,23 +71,41 @@ export class MainLayoutComponent implements OnInit {
     }
   }
 
-  get formattedDate(): string {
-  const meses = [
-    'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
-  ];
-  const dia = this.currentDate.getDate();
-  const mes = meses[this.currentDate.getMonth()];
-  const ano = this.currentDate.getFullYear();
-  return `${dia} de ${mes} de ${ano}`;
-}
+  get formattedDate (): string {
+    const meses = [
+      'janeiro',
+      'fevereiro',
+      'março',
+      'abril',
+      'maio',
+      'junho',
+      'julho',
+      'agosto',
+      'setembro',
+      'outubro',
+      'novembro',
+      'dezembro'
+    ]
+    const dia = this.currentDate.getDate()
+    const mes = meses[this.currentDate.getMonth()]
+    const ano = this.currentDate.getFullYear()
+    return `${dia} de ${mes} de ${ano}`
+  }
 
   goToRegister () {
     this.router.navigate(['/home/register'])
   }
-  goToCampaigns () {}
+  goToCampaigns () {
+    this.router.navigate(['/home/nova-campanha'])
+  }
+  goToNewClient () {
+    this.router.navigate(['/home/new-client'])
+  }
+
   goToReports () {}
+
   goToSettings () {}
+
   goOut () {
     this.auth.signOut().then(() => {
       this.router.navigate(['/'])

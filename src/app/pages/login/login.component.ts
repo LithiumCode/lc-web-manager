@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Firestore, doc, getDoc } from '@angular/fire/firestore'
+import { User } from '../../models/user'
 
 @Component({
   selector: 'app-login',
@@ -30,16 +31,16 @@ export class LoginComponent {
         const userSnap = await getDoc(userDocRef)
         if (userSnap.exists()) {
           this.userData = userSnap.data()
-          this.route.navigate(['/home'], {
-            state: {
-              nome: this.userData.name,
-              telefone: this.userData.phoneNumber,
-              email: this.userData.email,
-              foto: this.userData.imageUrl || 'assets/user-placeholder.png'
-            }
-          })
+          const user: User = {
+            userId: uid,
+            email: this.userData.email,
+            name: this.userData.name,
+            imageURL: this.userData.imageURL || 'assets/user-placeholder.png',
+            phoneNumber: this.userData.phoneNumber,
+            rule: this.userData.rule
+          }
+          this.route.navigate(['/home'], { state: { user } })
         } else {
-          // Inserir tela de erro ou redirecionar para a página inicial
           this.route.navigate(['/home'])
         }
       }

@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs'
 import { Auth } from '@angular/fire/auth'
 import { doc, getDoc } from '@angular/fire/firestore'
 import { FormsModule } from '@angular/forms'
+import { User } from '../../models/user'
 
 @Component({
   selector: 'app-home',
@@ -17,12 +18,12 @@ import { FormsModule } from '@angular/forms'
 export class HomeComponent implements OnInit {
   protected title = 'Web Skt Manager'
   protected description = ''
-
-  userName = ''
-  userEmail = ''
-  userPhone = ''
-  userPhoto = ''
-  rule = ''
+  user: User | null = null
+  // userName = ''
+  // userEmail = ''
+  // userPhone = ''
+  // userPhoto = ''
+  // rule = ''
   currentDate = new Date()
 
   skaters: any[] = []
@@ -31,13 +32,33 @@ export class HomeComponent implements OnInit {
   private firestore = inject(Firestore)
   private auth = inject(Auth)
 
-  constructor (private router: Router) {}
+  constructor (private router: Router) {
+    // Só pega do state se vier de navegação
+    const nav = this.router.getCurrentNavigation()
+    if (nav?.extras.state && nav.extras.state['user']) {
+      this.user = nav.extras.state['user'] as User
+    }
+  }
 
   async ngOnInit (): Promise<void> {
     this.loadUserRule()
     this.loadSkaters()
     this.loadChallengers()
+    this.loadUserData()
     const state = history.state
+  }
+
+  async loadUserData () {
+    if (!this.user) {
+      const currentUser = this.auth.currentUser
+      if (currentUser) {
+        const userDocRef = doc(this.firestore, 'User', currentUser.uid)
+        const userSnap = await getDoc(userDocRef)
+        if (userSnap.exists()) {
+          this.user = userSnap.data() as User
+        }
+      }
+    }
   }
 
   async loadUserRule () {
@@ -48,8 +69,6 @@ export class HomeComponent implements OnInit {
       const userSnap = await getDoc(userDocRef)
       if (userSnap.exists()) {
         const userData = userSnap.data() as any
-        this.rule = userData.rule || ''
-        this.userName = userData.nome || 'Usuário'
       }
     }
   }
@@ -94,7 +113,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToNewCampaign () {
-    this.router.navigate(['/home/nova-campanha']);
+    this.router.navigate(['/home/nova-campanha'])
   }
 
   goToReports () {
