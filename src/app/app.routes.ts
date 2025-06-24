@@ -14,10 +14,23 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', component: HomeComponent },
-      { path: 'register', component: UserRegisterComponent },
-      { path: 'nova-campanha', component: NewCampaignComponent },
-      { path: 'new-client', component: NewClientComponent },
+      {
+        path: '',
+        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
+      },
+      {
+        path: 'register',
+        loadComponent: () => import('./pages/register/register.component').then(m => m.UserRegisterComponent)
+      },
+      {
+        path: 'nova-campanha',
+        loadComponent: () => import('./pages/new-campaign/new-campaign.component').then(m => m.NewCampaignComponent)
+      },
+      {
+        path: 'new-client',
+        loadComponent: () => import('./pages/new-client/new-client.component').then(m => m.NewClientComponent)
+      },
     ]
   }
 ];
+

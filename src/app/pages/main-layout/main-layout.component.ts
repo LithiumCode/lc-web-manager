@@ -24,10 +24,15 @@ export class MainLayoutComponent implements OnInit {
   rule = ''
   currentDate = new Date()
 
-  private auth = inject(Auth)
-  private firestore = inject(Firestore)
+  // private auth = inject(Auth)
+  // private firestore = inject(Firestore)
 
-  constructor (private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor (
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private auth: Auth,
+    private firestore: Firestore
+  ) {}
 
   async ngOnInit () {
     const state = history.state
@@ -40,7 +45,7 @@ export class MainLayoutComponent implements OnInit {
       this.description = `Olá, ${this.userName}!`
     } else {
       this.auth.onAuthStateChanged(async (user: FirebaseUser | null) => {
-        console.log('onAuthStateChanged chamado', user);
+        console.log('onAuthStateChanged chamado', user)
         if (user) {
           const userDocRef = doc(this.firestore, 'User', user.uid)
           const userSnap = await getDoc(userDocRef)
@@ -54,7 +59,7 @@ export class MainLayoutComponent implements OnInit {
             this.rule = userData.rule || ''
             console.log('Rule via Firestore:', this.rule)
             this.description = `Olá, ${this.userName}!`
-            this.cdr.detectChanges();
+            this.cdr.detectChanges()
           } else {
             this.userName = user.displayName || 'Usuário'
             this.userEmail = user.email || ''

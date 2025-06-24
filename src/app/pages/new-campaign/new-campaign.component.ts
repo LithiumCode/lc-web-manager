@@ -46,11 +46,12 @@ export class NewCampaignComponent implements OnInit {
   public isBuscandoCliente = false
   public isCnpjValid: boolean = false
 
-  private auth = inject(Auth)
-  private firestore = inject(Firestore)
-  private storage = inject(Storage)
-
-  constructor (private router: Router) {}
+  constructor (
+    private router: Router,
+    private auth: Auth,
+    private firestore: Firestore,
+    private storage: Storage
+  ) {}
 
   async ngOnInit () {
     const advertisingCol = collection(this.firestore, 'Advertising')

@@ -1,25 +1,19 @@
 export interface Campaign {
-  id: string
-  name: string 
-  description: string
-  startDate: Date
-  endDate: Date 
-  status: 'active' | 'inactive' | 'completed' 
-  createdAt: Date 
-  updatedAt: Date 
-  createdBy: string 
-  updatedBy?: string 
-  imageURL?: string 
-  targetAudience?: string 
-  budget?: number 
-  metrics?: {
-    impressions: number 
-    clicks: number 
-    conversions: number 
-  }
-  tags?: string[] 
-  notes?: string 
-  isFeatured?: boolean 
-  priority?: 'low' | 'medium' | 'high'
-  externalLinks?: {}
+  id: string;
+  client: {
+    nomeFantasia: string;
+    cnpj: string;
+    telefone: string;
+    email: string;
+    endereco: string;
+    id: string;
+    responsavel: string;
+    razaoSocial: string;
+    inscricaoEstadual: string;
+  };
+  createdAt: Date | string;
+  createdById: string;
+  createdByName?: string;
+  days: number;
 }
+

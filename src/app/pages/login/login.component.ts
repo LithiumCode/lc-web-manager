@@ -19,10 +19,14 @@ export class LoginComponent {
   password = ''
   errorMessage = ''
   userData: any
-  private auth = inject(Auth)
-  private firestore = inject(Firestore)
+  // private auth = inject(Auth)
+  // private firestore = inject(Firestore)
 
-  constructor (private route: Router) {
+  constructor (
+    private route: Router,
+    private auth: Auth,
+    private firestore: Firestore
+  ) {
     this.auth.onAuthStateChanged(async user => {
       if (user) {
         const uid = user.uid
