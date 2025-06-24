@@ -30,6 +30,12 @@ export const routes: Routes = [
         path: 'new-client',
         loadComponent: () => import('./pages/new-client/new-client.component').then(m => m.NewClientComponent)
       },
+      { path: 'reports', 
+        loadComponent: () => import('./pages/reports/reports.component').then(m => m.ReportsComponent) 
+      },
+      { path: 'settings', 
+        loadComponent: () => import('./pages/settings/settings.component').then(m => m.SettingsComponent) 
+      }
     ]
   }
 ];

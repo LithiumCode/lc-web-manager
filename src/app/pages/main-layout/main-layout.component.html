@@ -6,27 +6,35 @@
         </div>
         <nav>
             <ul>
-                <li routerLink="/home" routerLinkActive="active">
+                <li [ngClass]="{ 'active': router.url === '/home' }" routerLink="/home" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">
                     <i class="material-icons">dashboard</i> Dashboard
                 </li>
-                <li *ngIf="rule === 'ADM'" (click)="goToRegister()">
+
+                <li [ngClass]="{ 'active': router.url === '/home/register' }" (click)="goToRegister()">
                     <i class="material-icons">person_add</i> Novo Usuário
                 </li>
-                <li (click)="goToCampaigns()">
+
+                <li [ngClass]="{ 'active': router.url === '/home/nova-campanha' }" (click)="goToCampaigns()">
                     <i class="material-icons">launch</i> Nova Campanha
                 </li>
-                <li (click)="goToNewClient()">
+
+                <li [ngClass]="{ 'active': router.url === '/home/new-client' }" (click)="goToNewClient()">
                     <i class="material-icons">launch</i> Novo Cliente
                 </li>
-                <li (click)="goToReports()">
+
+                <li [ngClass]="{ 'active': router.url === '/home/reports' }" (click)="goToReports()">
                     <i class="material-icons">bar_chart</i> Relatórios
                 </li>
-                <li (click)="goToSettings()">
+
+                <li [ngClass]="{ 'active': router.url === '/home/settings' }" (click)="goToSettings()">
                     <i class="material-icons">settings</i> Configurações
                 </li>
+
                 <li (click)="goOut()">
                     <i class="material-icons">logout</i> Sair
                 </li>
+
             </ul>
         </nav>
     </aside>

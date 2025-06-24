@@ -22,13 +22,11 @@ export class MainLayoutComponent implements OnInit {
   userPhoto = ''
   description = ''
   rule = ''
+  routerLinkActive = 'active'
   currentDate = new Date()
 
-  // private auth = inject(Auth)
-  // private firestore = inject(Firestore)
-
   constructor (
-    private router: Router,
+    public router: Router,
     private cdr: ChangeDetectorRef,
     private auth: Auth,
     private firestore: Firestore
@@ -45,7 +43,6 @@ export class MainLayoutComponent implements OnInit {
       this.description = `Olá, ${this.userName}!`
     } else {
       this.auth.onAuthStateChanged(async (user: FirebaseUser | null) => {
-        console.log('onAuthStateChanged chamado', user)
         if (user) {
           const userDocRef = doc(this.firestore, 'User', user.uid)
           const userSnap = await getDoc(userDocRef)
@@ -57,7 +54,6 @@ export class MainLayoutComponent implements OnInit {
             this.userPhone = userData.phoneNumber || ''
             this.userPhoto = userData.imageURL || 'assets/user-placeholder.png'
             this.rule = userData.rule || ''
-            console.log('Rule via Firestore:', this.rule)
             this.description = `Olá, ${this.userName}!`
             this.cdr.detectChanges()
           } else {
@@ -66,7 +62,6 @@ export class MainLayoutComponent implements OnInit {
             this.userPhone = user.phoneNumber || ''
             this.userPhoto = user.photoURL || 'assets/user-placeholder.png'
             this.rule = ''
-            console.log('Rule via Firestore:', this.rule)
             this.description = `Olá, ${this.userName}!`
           }
         } else {
@@ -98,18 +93,28 @@ export class MainLayoutComponent implements OnInit {
   }
 
   goToRegister () {
-    this.router.navigate(['/home/register'])
+    this.router.navigate(['/home/register']);
   }
   goToCampaigns () {
-    this.router.navigate(['/home/nova-campanha'])
+    this.router.navigate(['/home/nova-campanha']);
   }
   goToNewClient () {
-    this.router.navigate(['/home/new-client'])
+    this.router.navigate(['/home/new-client']);
   }
 
-  goToReports () {}
+  goToReports () {
+    this.router.navigate(['/home/reports']);
+    console.log('====================================');
+    console.log('Redirecionando para relatórios...');
+    console.log('====================================');
+  }
 
-  goToSettings () {}
+  goToSettings () {
+    this.router.navigate(['/home/settings']);
+    console.log('====================================');
+    console.log('Redirecionando para Configurações');
+    console.log('====================================');
+  }
 
   goOut () {
     this.auth.signOut().then(() => {
