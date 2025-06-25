@@ -19,11 +19,6 @@ export class HomeComponent implements OnInit {
   protected title = 'Web Skt Manager'
   protected description = ''
   user: User | null = null
-  // userName = ''
-  // userEmail = ''
-  // userPhone = ''
-  // userPhoto = ''
-  // rule = ''
   currentDate = new Date()
 
   skaters: any[] = []
