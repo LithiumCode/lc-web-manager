@@ -28,9 +28,11 @@
                 </li>
 
                 <li *ngIf="rule === 'ADM'" [ngClass]="{ 'active': router.url === '/home/settings' }" (click)="goToSettings()">
-                    <i class="material-icons">settings</i> Configurações
+                    <i class="material-icons">construction</i> Chaves
                 </li>
-
+                <li [ngClass]="{ 'active': router.url === '/home/change-password' }" (click)="goToChangePassword()">
+                    <i class="material-icons">key</i> Alterar Senha
+                </li>
                 <li (click)="goOut()">
                     <i class="material-icons">logout</i> Sair
                 </li>

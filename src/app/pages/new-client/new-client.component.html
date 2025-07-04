@@ -1,76 +1,52 @@
-<!-- Loading -->
-<div *ngIf="isSaving" class="card-info loading-card">
-  <div class="loader"></div>
-  <p>Salvando cliente...</p>
-</div>
+<form *ngIf="!isSaving && !successClient && !errorMsg" class="form-client-container" (ngSubmit)="cadastrarCliente()" autocomplete="off">
+  <h2>Cadastrar Novo Cliente</h2>
 
-<!-- Card de sucesso -->
-<div *ngIf="successClient && !isSaving" class="card-info success-card">
-    <h3>Cliente cadastrado com sucesso!</h3>
-    <ul>
-        <li><b>Razão Social:</b> {{ successClient.razaoSocial }}</li>
-        <li><b>Nome Fantasia:</b> {{ successClient.nomeFantasia }}</li>
-        <li><b>CNPJ:</b> {{ successClient.cnpj }}</li>
-        <li><b>Inscrição Estadual:</b> {{ successClient.inscricaoEstadual }}</li>
-        <li><b>Endereço:</b> {{ successClient.endereco }}</li>
-        <li><b>Telefone:</b> {{ successClient.telefone }}</li>
-        <li><b>E-mail:</b> {{ successClient.email }}</li>
-        <li><b>Responsável:</b> {{ successClient.responsavel }}</li>
-    </ul>
-</div>
-<!-- Card de erro -->
-<div *ngIf="errorMsg && !isSaving" class="card-info error-card">
-    <h3>Erro ao cadastrar cliente</h3>
-    <p>{{ errorMsg }}</p>
-</div>
-
-<form *ngIf="!isSaving && !successClient && !errorMsg" class="form-client-container" (ngSubmit)="cadastrarCliente()"
-    autocomplete="off">
-    <h2>Cadastrar Novo Cliente</h2>
-
-    <div class="form-group">
-        <label>Razão Social</label>
-        <input type="text" [(ngModel)]="novoCliente.razaoSocial" name="razaoSocial" required />
+  <div class="form-row">
+    <div class="form-group medium">
+      <label>Razão Social</label>
+      <input type="text" [(ngModel)]="novoCliente.razaoSocial" name="razaoSocial" required />
     </div>
-
-    <div class="form-group">
-        <label>Nome Fantasia</label>
-        <input type="text" [(ngModel)]="novoCliente.nomeFantasia" name="nomeFantasia" required />
+    <div class="form-group medium">
+      <label>Nome Fantasia</label>
+      <input type="text" [(ngModel)]="novoCliente.nomeFantasia" name="nomeFantasia" required />
     </div>
+  </div>
 
-    <div class="form-group">
-        <label>CNPJ</label>
-        <input type="text" [(ngModel)]="novoCliente.cnpj" name="cnpj" maxlength="18" (input)="maskCnpj($event)"
-            required />
+  <div class="form-row">
+    <div class="form-group short">
+      <label>CNPJ</label>
+      <input type="text" [(ngModel)]="novoCliente.cnpj" name="cnpj" maxlength="18" (input)="maskCnpj($event)" required />
     </div>
+    <div class="form-group short">
+      <label>Inscrição Estadual</label>
+      <input type="text" [(ngModel)]="novoCliente.inscricaoEstadual" name="inscricaoEstadual" />
+    </div>
+    <div class="form-group medium">
+      <label>Endereço</label>
+      <input type="text" [(ngModel)]="novoCliente.endereco" name="endereco" required />
+    </div>
+  </div>
 
-    <div class="form-group">
-        <label>Inscrição Estadual</label>
-        <input type="text" [(ngModel)]="novoCliente.inscricaoEstadual" name="inscricaoEstadual" />
+  <div class="form-row">
+    <div class="form-group short">
+      <label>Telefone</label>
+      <input type="text" [(ngModel)]="novoCliente.telefone" name="telefone" maxlength="11" required />
     </div>
+    <div class="form-group medium">
+      <label>E-mail</label>
+      <input type="email" [(ngModel)]="novoCliente.email" name="email" required />
+    </div>
+    <div class="form-group medium">
+      <label>Responsável</label>
+      <input type="text" [(ngModel)]="novoCliente.responsavel" name="responsavel" required />
+    </div>
+  </div>
 
-    <div class="form-group">
-        <label>Endereço</label>
-        <input type="text" [(ngModel)]="novoCliente.endereco" name="endereco" required />
-    </div>
-
-    <div class="form-group">
-        <label>Telefone</label>
-        <input type="text" [(ngModel)]="novoCliente.telefone" name="telefone" required />
-    </div>
-
-    <div class="form-group">
-        <label>E-mail</label>
-        <input type="email" [(ngModel)]="novoCliente.email" name="email" required />
-    </div>
-
-    <div class="form-group">
-        <label>Responsável</label>
-        <input type="text" [(ngModel)]="novoCliente.responsavel" name="responsavel" required />
-    </div>
-
-    <div class="button-group">
-        <button type="submit" class="btn-primary">Salvar Cliente</button>
-        <button type="button" class="btn-cancel" (click)="cancelarCadastro()">Cancelar</button>
-    </div>
+  <div class="button-group">
+    <button type="submit" class="btn-primary">Salvar Cliente</button>
+    <button type="button" class="btn-cancel" (click)="cancelarCadastro()">Cancelar</button>
+  </div>
 </form>
+<div *ngIf="isSaving" class="loading-overlay">
+  <div class="spinner"></div>
+  <span>Salvando cliente...</span>

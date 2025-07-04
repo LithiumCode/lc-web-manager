@@ -104,16 +104,14 @@ export class MainLayoutComponent implements OnInit {
 
   goToReports () {
     this.router.navigate(['/home/reports']);
-    console.log('====================================');
-    console.log('Redirecionando para relatórios...');
-    console.log('====================================');
   }
 
   goToSettings () {
     this.router.navigate(['/home/settings']);
-    console.log('====================================');
-    console.log('Redirecionando para Configurações');
-    console.log('====================================');
+  }
+
+  goToChangePassword () {
+    this.router.navigate(['/home/change-password']);
   }
 
   goOut () {

@@ -35,6 +35,9 @@ export const routes: Routes = [
       },
       { path: 'settings', 
         loadComponent: () => import('./pages/settings/settings.component').then(m => m.SettingsComponent) 
+      },
+      { path: 'change-password',
+        loadComponent: () => import('./pages/change-password/change-password.component').then(m => m.ChangePasswordComponent)
       }
     ]
   }
