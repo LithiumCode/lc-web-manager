@@ -15,15 +15,15 @@
                     <i class="material-icons">person_add</i> Novo Usuário
                 </li>
 
-                <li [ngClass]="{ 'active': router.url === '/home/nova-campanha' }" (click)="goToCampaigns()">
+                <li  *ngIf="rule === 'ADM || MKT'" [ngClass]="{ 'active': router.url === '/home/nova-campanha' }" (click)="goToCampaigns()">
                     <i class="material-icons">launch</i> Nova Campanha
                 </li>
 
-                <li [ngClass]="{ 'active': router.url === '/home/new-client' }" (click)="goToNewClient()">
+                <li  *ngIf="rule === 'ADM || MKT'" [ngClass]="{ 'active': router.url === '/home/new-client' }" (click)="goToNewClient()">
                     <i class="material-icons">launch</i> Novo Cliente
                 </li>
 
-                <li [ngClass]="{ 'active': router.url === '/home/reports' }" (click)="goToReports()">
+                <li  *ngIf="rule === 'ADM || MKT'" [ngClass]="{ 'active': router.url === '/home/reports' }" (click)="goToReports()">
                     <i class="material-icons">bar_chart</i> Relatórios
                 </li>
 
