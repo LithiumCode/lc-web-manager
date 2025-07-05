@@ -16,7 +16,7 @@
                 </li>
 
                 <li  *ngIf="rule === 'ADM' || rule === 'MKT'" [ngClass]="{ 'active': router.url === '/home/nova-campanha' }" (click)="goToCampaigns()">
-                    <i class="material-icons">launch</i> Nova Campanha
+                    <i class="material-icons">launch</i> Criar Campanha
                 </li>
 
                 <li  *ngIf="rule === 'ADM' || rule === 'MKT'" [ngClass]="{ 'active': router.url === '/home/new-client' }" (click)="goToNewClient()">
@@ -24,7 +24,7 @@
                 </li>
 
                 <li  *ngIf="rule === 'ADM' || rule === 'MKT'" [ngClass]="{ 'active': router.url === '/home/reports' }" (click)="goToReports()">
-                    <i class="material-icons">bar_chart</i> Relatórios
+                    <i class="material-icons">bar_chart</i> Gerenciar Campanhas
                 </li>
 
                 <li *ngIf="rule === 'ADM'" [ngClass]="{ 'active': router.url === '/home/settings' }" (click)="goToSettings()">

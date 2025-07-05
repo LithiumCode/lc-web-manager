@@ -1,13 +1,12 @@
-import { inject, Injectable } from '@angular/core'
+import {Injectable } from '@angular/core'
 import {
   collection,
-  Firestore,
-  getDocs,
-  CollectionReference
+  doc,
+  updateDoc
 } from 'firebase/firestore'
-import { map, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import { Campaign } from '../models/campaign'
-import { collectionData } from '@angular/fire/firestore'
+import { collectionData, Firestore } from '@angular/fire/firestore'
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +18,10 @@ export class CampaignService {
   getCampaigns(): Observable<Campaign[]> {
     const ref = collection(this.firestore, 'Campaign');
     return collectionData(ref, { idField: 'id' }) as Observable<Campaign[]>;
+  }
+
+  toggleCampaignStatus(campaignId: string, status: string): Promise<void> {
+    const campaignDoc = doc(this.firestore, `Campaign/${campaignId}`);
+    return updateDoc(campaignDoc, { status });
   }
 }

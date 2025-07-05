@@ -1,7 +1,6 @@
 // src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
-import { getAuth, updatePassword } from 'firebase/auth';
-import { FirebaseApp } from '@angular/fire/app';
+import { updatePassword } from 'firebase/auth';
 import { Auth, user } from '@angular/fire/auth';
 import { firstValueFrom } from 'rxjs';
 
