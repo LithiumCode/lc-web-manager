@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Firestore, doc, getDoc } from '@angular/fire/firestore'
+import { User } from '../../models/user'
+import { sendPasswordResetEmail } from 'firebase/auth'
 
 @Component({
   selector: 'app-login',
@@ -17,11 +19,16 @@ export class LoginComponent {
   email = ''
   password = ''
   errorMessage = ''
+  successMessage = ''
   userData: any
-  private auth = inject(Auth)
-  private firestore = inject(Firestore)
+  // private auth = inject(Auth)
+  // private firestore = inject(Firestore)
 
-  constructor (private route: Router) {
+  constructor (
+    private route: Router,
+    private auth: Auth,
+    private firestore: Firestore
+  ) {
     this.auth.onAuthStateChanged(async user => {
       if (user) {
         const uid = user.uid
@@ -30,16 +37,16 @@ export class LoginComponent {
         const userSnap = await getDoc(userDocRef)
         if (userSnap.exists()) {
           this.userData = userSnap.data()
-          this.route.navigate(['/home'], {
-            state: {
-              nome: this.userData.name,
-              telefone: this.userData.phoneNumber,
-              email: this.userData.email,
-              foto: this.userData.imageUrl || 'assets/user-placeholder.png'
-            }
-          })
+          const user: User = {
+            userId: uid,
+            email: this.userData.email,
+            name: this.userData.name,
+            imageURL: this.userData.imageURL || 'assets/user-placeholder.png',
+            phoneNumber: this.userData.phoneNumber,
+            rule: this.userData.rule
+          }
+          this.route.navigate(['/home'], { state: { user } })
         } else {
-          // Inserir tela de erro ou redirecionar para a página inicial
           this.route.navigate(['/home'])
         }
       }
@@ -76,6 +83,22 @@ export class LoginComponent {
       }
     } catch (error: any) {
       this.errorMessage = error.message
+    }
+  }
+
+  async forgotPassword (event: Event) {
+    event.preventDefault()
+    if (!this.email) {
+      this.errorMessage = 'Por favor, insira seu email para redefinir a senha.'
+      return
+    }
+    try {
+      await sendPasswordResetEmail(this.auth, this.email)
+      this.successMessage =
+        'Enviamos um email com instruções para redefinir sua senha.'
+    } catch (error: any) {
+      this.errorMessage =
+        'Erro ao enviar email de redefinição de senha: ' + error.message
     }
   }
 }

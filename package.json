@@ -1,9 +1,10 @@
 {
-  "name": "web-sk8-manager",
+  "name": "web-skt-manager",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-hml": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -17,7 +18,12 @@
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "chart.js": "^4.5.0",
+    "echarts": "^5.6.0",
     "firebase": "^11.9.1",
+    "ng-circle-progress": "^1.7.1",
+    "ng2-charts": "^8.0.0",
+    "ngx-echarts": "^20.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

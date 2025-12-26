@@ -8,5 +8,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss'
 })
 export class AppComponent {
-  protected title = 'web-sk8-manager';
+  protected title = 'web-skt-manager';
 }
