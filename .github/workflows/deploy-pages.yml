@@ -29,18 +29,18 @@ jobs:
       - name: Build Angular
         run: |
           npm run build -- \
-            --base-href="/web-sk8-manager/" \
-            --deploy-url="/web-sk8-manager/"
+            --base-href="/lc-web-manager/" \
+            --deploy-url="/lc-web-manager/"
 
       - name: SPA fallback
         run: |
-          cp dist/web-sk8-manager/browser/index.html \
-             dist/web-sk8-manager/browser/404.html
+          cp dist/lc-web-manager/browser/index.html \
+             dist/lc-web-manager/browser/404.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/web-sk8-manager/browser
+          path: dist/lc-web-manager/browser
 
   deploy:
     runs-on: ubuntu-latest
