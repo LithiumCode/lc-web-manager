@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Firestore, doc, getDoc } from '@angular/fire/firestore'
 import { User } from '../../models/user'
+import { sendPasswordResetEmail } from 'firebase/auth'
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent {
   email = ''
   password = ''
   errorMessage = ''
+  successMessage = ''
   userData: any
   // private auth = inject(Auth)
   // private firestore = inject(Firestore)
@@ -81,6 +83,22 @@ export class LoginComponent {
       }
     } catch (error: any) {
       this.errorMessage = error.message
+    }
+  }
+
+  async forgotPassword (event: Event) {
+    event.preventDefault()
+    if (!this.email) {
+      this.errorMessage = 'Por favor, insira seu email para redefinir a senha.'
+      return
+    }
+    try {
+      await sendPasswordResetEmail(this.auth, this.email)
+      this.successMessage =
+        'Enviamos um email com instruções para redefinir sua senha.'
+    } catch (error: any) {
+      this.errorMessage =
+        'Erro ao enviar email de redefinição de senha: ' + error.message
     }
   }
 }
