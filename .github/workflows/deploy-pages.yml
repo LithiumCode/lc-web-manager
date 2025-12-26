@@ -34,13 +34,13 @@ jobs:
 
       - name: SPA fallback
         run: |
-          cp dist/lc-web-manager/browser/index.html \
-             dist/lc-web-manager/browser/404.html
+          cp dist/web-sk8-manager/browser/index.html \
+             dist/web-sk8-manager/browser/404.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/lc-web-manager/browser
+          path: dist/web-sk8-manager/browser
 
   deploy:
     runs-on: ubuntu-latest
